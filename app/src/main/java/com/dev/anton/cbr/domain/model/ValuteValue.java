@@ -8,5 +8,4 @@ public class ValuteValue extends BigDecimal {
         super(decimal);
         setScale(4);
     }
-
 }

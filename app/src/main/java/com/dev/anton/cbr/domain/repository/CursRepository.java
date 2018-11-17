@@ -6,4 +6,6 @@ import com.dev.anton.cbr.domain.model.ValCurs;
 public interface CursRepository {
 
     BaseResponse<ValCurs> getCurs();
+
+    BaseResponse<ValCurs> fetchCurs();
 }

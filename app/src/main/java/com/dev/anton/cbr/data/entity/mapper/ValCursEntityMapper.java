@@ -2,14 +2,17 @@ package com.dev.anton.cbr.data.entity.mapper;
 
 import com.dev.anton.cbr.data.entity.ValCursEntity;
 import com.dev.anton.cbr.data.entity.ValuteEntity;
+import com.dev.anton.cbr.data.entity.base.BaseMapper;
 import com.dev.anton.cbr.domain.model.ValCurs;
 import com.dev.anton.cbr.domain.model.Valute;
+import com.dev.anton.cbr.domain.model.ValuteValue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValCursEntityMapper {
+public class ValCursEntityMapper extends BaseMapper<ValCursEntity, ValCurs> {
 
+    @Override
     public ValCurs mapTo(ValCursEntity valCursEntity) {
         ValCurs valCurs = new ValCurs();
         valCurs.setValutes(mapTo(valCursEntity.getValuteEntities()));
@@ -18,13 +21,17 @@ public class ValCursEntityMapper {
         return valCurs;
     }
 
-
-    public Valute mapTo(ValuteEntity valuteEntity) {
+    private Valute mapTo(ValuteEntity valuteEntity) {
         Valute valute = new Valute(valuteEntity.getId());
+        valute.setName(valuteEntity.getName());
+        valute.setCharCode(valuteEntity.getCharCode());
+        valute.setNominal(valuteEntity.getNominal());
+        valute.setValue(new ValuteValue(valuteEntity.getValue()
+                .replace(",", ".")));
         return valute;
     }
 
-    public List<Valute> mapTo(List<ValuteEntity> valuteEntityList) {
+    private List<Valute> mapTo(List<ValuteEntity> valuteEntityList) {
         final List<Valute> valuteList = new ArrayList<>(valuteEntityList.size());
         for (ValuteEntity valuteEntity : valuteEntityList) {
             final Valute valute = mapTo(valuteEntity);
@@ -34,5 +41,4 @@ public class ValCursEntityMapper {
         }
         return valuteList;
     }
-
 }

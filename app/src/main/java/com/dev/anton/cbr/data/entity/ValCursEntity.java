@@ -15,12 +15,10 @@ public class ValCursEntity {
     @Attribute
     private String name;
 
-    @ElementList
+    @ElementList(inline = true)
     private List<ValuteEntity> valuteEntities;
 
-    public String getDate() {
-        return date;
-    }
+    public String getDate() { return date; }
 
     public void setDate(String date) {
         this.date = date;
@@ -38,7 +36,5 @@ public class ValCursEntity {
         return valuteEntities;
     }
 
-    public void setValuteEntities(List<ValuteEntity> valuteEntities) {
-        this.valuteEntities = valuteEntities;
-    }
+    public void setValuteEntities(List<ValuteEntity> valuteEntities) { this.valuteEntities = valuteEntities; }
 }
