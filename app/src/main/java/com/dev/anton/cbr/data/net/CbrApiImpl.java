@@ -8,7 +8,6 @@ import java.net.MalformedURLException;
 
 public class CbrApiImpl implements CbrApi {
 
-
     @Override
     public BaseResponse<ValCursEntity> getCurs() {
         try {
@@ -17,5 +16,4 @@ public class CbrApiImpl implements CbrApi {
             return BaseResponse.error(new BaseError(e));
         }
     }
-
 }

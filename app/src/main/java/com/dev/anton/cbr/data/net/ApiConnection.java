@@ -18,16 +18,14 @@ class ApiConnection<T> {
 
     private static final String GET = "GET";
     private final String DEFAULT_CHARSET = "windows-1251";
+    private final URL url;
 
-    final private URL url;
-    final private Class<T> type;
-
+    private final Class<T> typeResponse;
     private BaseResponse<T> response;
 
-
-    private ApiConnection(String url, Class<T> type) throws MalformedURLException {
+    private ApiConnection(String url, Class<T> typeResponse) throws MalformedURLException {
         this.url = new URL(url);
-        this.type = type;
+        this.typeResponse = typeResponse;
     }
 
     @SuppressWarnings("unchecked")
@@ -52,7 +50,7 @@ class ApiConnection<T> {
             String strResponse = readStream(in);
 
             Serializer serializer = new Persister();
-            T result = serializer.read(type, strResponse);
+            T result = serializer.read(typeResponse, strResponse);
 
             response = BaseResponse.success(result);
         } catch (Exception e) {
@@ -73,7 +71,6 @@ class ApiConnection<T> {
         try {
             in.close();
         } catch (Exception ignored) {
-
         }
     }
 
