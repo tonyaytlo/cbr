@@ -8,4 +8,5 @@
     <color name="colorDivider">#979797</color>
     <color name="colorWarning">#ffcc00</color>
     <color name="colorTextButton">#ffffff</color>
+    <color name="colorBackgroundGray">#dedede</color>
 </resources>
