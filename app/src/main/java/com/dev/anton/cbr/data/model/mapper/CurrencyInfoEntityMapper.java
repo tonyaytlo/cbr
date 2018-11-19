@@ -8,6 +8,8 @@ import com.dev.anton.cbr.domain.model.CurrencyInfo;
 import com.dev.anton.cbr.domain.model.CurrencyValue;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class CurrencyInfoEntityMapper extends BaseMapper<CurrencyInfoEntity, CurrencyInfo> {
@@ -39,6 +41,12 @@ public class CurrencyInfoEntityMapper extends BaseMapper<CurrencyInfoEntity, Cur
                 currencyList.add(currency);
             }
         }
+        Collections.sort(currencyList, new Comparator<Currency>() {
+            @Override
+            public int compare(Currency o1, Currency o2) {
+                return o1.getCharCode().compareTo(o2.getCharCode());
+            }
+        });
         return currencyList;
     }
 }

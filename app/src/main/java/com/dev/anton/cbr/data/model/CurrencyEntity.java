@@ -4,7 +4,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root(name = "Currency")
+@Root(name = "Valute")
 public class CurrencyEntity {
 
     @Attribute(name = "ID")
@@ -29,13 +29,17 @@ public class CurrencyEntity {
         return id;
     }
 
-    public void setId(String id) { this.id = id; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public int getNumCode() {
         return numCode;
     }
 
-    public void setNumCode(int numCode) { this.numCode = numCode; }
+    public void setNumCode(int numCode) {
+        this.numCode = numCode;
+    }
 
     public String getCharCode() {
         return charCode;

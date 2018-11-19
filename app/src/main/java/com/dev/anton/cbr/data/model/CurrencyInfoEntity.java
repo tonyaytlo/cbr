@@ -6,7 +6,7 @@ import org.simpleframework.xml.Root;
 
 import java.util.List;
 
-@Root(name = "CurrencyInfo")
+@Root(name = "ValCurs")
 public class CurrencyInfoEntity {
 
     @Attribute(name = "Date")
