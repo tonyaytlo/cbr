@@ -2,7 +2,7 @@ package com.dev.anton.cbr.domain.di;
 
 import com.dev.anton.cbr.data.di.DataModule;
 import com.dev.anton.cbr.domain.interactors.CurrencyUseCase;
-import com.dev.anton.cbr.domain.repository.CursRepository;
+import com.dev.anton.cbr.domain.repository.CurrencyRepository;
 
 public class DomainModuleImpl implements DomainModule {
 
@@ -13,8 +13,8 @@ public class DomainModuleImpl implements DomainModule {
     }
 
     @Override
-    public CurrencyUseCase provideCurrencyUseCase(CursRepository cursRepository) {
-        return new CurrencyUseCase(cursRepository);
+    public CurrencyUseCase provideCurrencyUseCase(CurrencyRepository currencyRepository) {
+        return new CurrencyUseCase(currencyRepository);
     }
 
     @Override

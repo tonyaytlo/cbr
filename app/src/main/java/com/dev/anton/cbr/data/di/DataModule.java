@@ -1,23 +1,20 @@
 package com.dev.anton.cbr.data.di;
 
-import com.dev.anton.cbr.data.db.DbHelper;
-import com.dev.anton.cbr.data.model.mapper.ValCursEntityMapper;
-import com.dev.anton.cbr.data.net.CbrApi;
-import com.dev.anton.cbr.data.repository.datasource.CursDataStoreFactory;
-import com.dev.anton.cbr.domain.repository.CursRepository;
+import com.dev.anton.cbr.data.db.CurrencyDbHelper;
+import com.dev.anton.cbr.data.model.mapper.CurrencyInfoEntityMapper;
+import com.dev.anton.cbr.data.repository.datasource.CurrencyDataStoreFactory;
+import com.dev.anton.cbr.domain.repository.CurrencyRepository;
 
 public interface DataModule {
 
-    DbHelper provideDbHelper();
+    CurrencyDbHelper provideDbHelper();
 
-    CbrApi provideCbrApi();
+    CurrencyDataStoreFactory provideCursDataStoreFactory(CurrencyDbHelper currencyDbHelper);
 
-    CursDataStoreFactory provideCursDataStoreFactory(DbHelper dbHelper);
+    CurrencyInfoEntityMapper provideValCursEntityMapper();
 
-    ValCursEntityMapper provideValCursEntityMapper();
+    CurrencyRepository provideCursRepository(CurrencyInfoEntityMapper currencyInfoEntityMapper,
+                                             CurrencyDataStoreFactory currencyDataStoreFactory);
 
-    CursRepository provideCursRepository(ValCursEntityMapper valCursEntityMapper,
-                                         CursDataStoreFactory cursDataStoreFactory);
-
-    CursRepository getCursRepository();
+    CurrencyRepository getCursRepository();
 }

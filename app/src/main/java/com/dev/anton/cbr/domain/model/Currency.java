@@ -1,41 +1,34 @@
-package com.dev.anton.cbr.data.model;
+package com.dev.anton.cbr.domain.model;
 
-import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
+public class Currency {
 
-@Root(name = "Valute")
-public class ValuteEntity {
+    public Currency(String id) {
+        this.id = id;
+    }
 
-    @Attribute(name = "ID")
     private String id;
 
-    @Element(name = "NumCode")
     private int numCode;
 
-    @Element(name = "CharCode")
     private String charCode;
 
-    @Element(name = "Nominal")
     private int nominal;
 
-    @Element(name = "Name")
     private String name;
 
-    @Element(name = "Value")
-    private String value;
+    private CurrencyValue value;
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) { this.id = id; }
-
     public int getNumCode() {
         return numCode;
     }
 
-    public void setNumCode(int numCode) { this.numCode = numCode; }
+    public void setNumCode(int numCode) {
+        this.numCode = numCode;
+    }
 
     public String getCharCode() {
         return charCode;
@@ -61,11 +54,11 @@ public class ValuteEntity {
         this.name = name;
     }
 
-    public String getValue() {
+    public CurrencyValue getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(CurrencyValue value) {
         this.value = value;
     }
 }

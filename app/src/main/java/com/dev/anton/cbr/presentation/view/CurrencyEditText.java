@@ -5,7 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 
-import com.dev.anton.cbr.domain.model.ValuteValue;
+import com.dev.anton.cbr.domain.model.CurrencyValue;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,7 +62,7 @@ public class CurrencyEditText extends android.support.v7.widget.AppCompatEditTex
         this.setText("0");
     }
 
-    public ValuteValue getValute() {
-        return new ValuteValue(getText().toString());
+    public CurrencyValue getValute() {
+        return new CurrencyValue(getText().toString());
     }
 }

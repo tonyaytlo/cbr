@@ -10,16 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.dev.anton.cbr.domain.model.Valute;
+import com.dev.anton.cbr.domain.model.Currency;
 
 import java.util.List;
 
-public class CurrencySpinnerAdapter extends ArrayAdapter<Valute> {
+public class CurrencySpinnerAdapter extends ArrayAdapter<Currency> {
 
     private final Context context;
-    private final List<Valute> currency;
+    private final List<Currency> currency;
 
-    public CurrencySpinnerAdapter(Context context, int textViewResourceId, List<Valute> currency) {
+    public CurrencySpinnerAdapter(Context context, int textViewResourceId, List<Currency> currency) {
         super(context, textViewResourceId, currency);
         this.context = context;
         this.currency = currency;
@@ -31,7 +31,7 @@ public class CurrencySpinnerAdapter extends ArrayAdapter<Valute> {
     }
 
     @Override
-    public Valute getItem(int position) {
+    public Currency getItem(int position) {
         return currency.get(position);
     }
 
@@ -44,7 +44,7 @@ public class CurrencySpinnerAdapter extends ArrayAdapter<Valute> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView tvLabel = (TextView) super.getView(position, convertView, parent);
-        Valute item = currency.get(position);
+        Currency item = currency.get(position);
         tvLabel.setText(item.getCharCode());
         return tvLabel;
     }
@@ -53,7 +53,7 @@ public class CurrencySpinnerAdapter extends ArrayAdapter<Valute> {
     public View getDropDownView(int position, View convertView,
                                 ViewGroup parent) {
         TextView tvLabel = (TextView) super.getDropDownView(position, convertView, parent);
-        Valute item = currency.get(position);
+        Currency item = currency.get(position);
         SpannableStringBuilder str = new SpannableStringBuilder(String.format("%s - %s", item.getCharCode(), item.getName()));
         str.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, item.getCharCode().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvLabel.setText(str);

@@ -13,8 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dev.anton.cbr.R;
-import com.dev.anton.cbr.domain.model.ValCurs;
-import com.dev.anton.cbr.domain.model.Valute;
+import com.dev.anton.cbr.domain.model.Currency;
+import com.dev.anton.cbr.domain.model.CurrencyInfo;
 import com.dev.anton.cbr.presentation.model.CurrencyConverter;
 import com.dev.anton.cbr.presentation.view.adapter.CurrencySpinnerAdapter;
 
@@ -29,8 +29,8 @@ public class CurrencyConvertView extends CardView {
     private ImageView ivClock;
 
     private CurrencyConverter converter = new CurrencyConverter();
-    private Valute currencyFrom;
-    private Valute currencyTo;
+    private Currency currencyFrom;
+    private Currency currencyTo;
     private OnCurrencySelectListener internalSelectListener;
 
     public CurrencyConvertView(@NonNull Context context) {
@@ -68,7 +68,7 @@ public class CurrencyConvertView extends CardView {
         });
         internalSelectListener = new OnCurrencySelectListener() {
             @Override
-            public void onCurrencySelect(Valute currencyFrom, Valute currencyTo) {
+            public void onCurrencySelect(Currency currencyFrom, Currency currencyTo) {
                 enableConvert(currencyFrom != null && currencyTo != null);
                 clearToCurrency();
             }
@@ -79,15 +79,15 @@ public class CurrencyConvertView extends CardView {
         this.converter = converter;
     }
 
-    public void populate(ValCurs valCurs) {
-        final String date = valCurs.getDate();
+    public void populate(CurrencyInfo currencyInfo) {
+        final String date = currencyInfo.getDate();
         if (date != null && !date.isEmpty()) {
             setDescription(String.format(getContext().getString(R.string.date_update_format), date));
         } else {
             setDescriptionVisibility(false);
         }
 
-        final CurrencySpinnerAdapter adapterFrom = new CurrencySpinnerAdapter(this.getContext(), R.layout.spinner_item, valCurs.getValutes());
+        final CurrencySpinnerAdapter adapterFrom = new CurrencySpinnerAdapter(this.getContext(), R.layout.spinner_item, currencyInfo.getCurrencies());
         adapterFrom.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         srCurrencyFrom.setAdapter(adapterFrom);
         srCurrencyFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -103,7 +103,7 @@ public class CurrencyConvertView extends CardView {
         });
 
 
-        final CurrencySpinnerAdapter adapterTo = new CurrencySpinnerAdapter(this.getContext(), R.layout.spinner_item, valCurs.getValutes());
+        final CurrencySpinnerAdapter adapterTo = new CurrencySpinnerAdapter(this.getContext(), R.layout.spinner_item, currencyInfo.getCurrencies());
         adapterTo.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         srCurrencyTo.setAdapter(adapterTo);
         srCurrencyTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -142,6 +142,6 @@ public class CurrencyConvertView extends CardView {
     }
 
     private interface OnCurrencySelectListener {
-        void onCurrencySelect(Valute currencyFrom, Valute currencyTo);
+        void onCurrencySelect(Currency currencyFrom, Currency currencyTo);
     }
 }

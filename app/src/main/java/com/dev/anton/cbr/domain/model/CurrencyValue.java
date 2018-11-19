@@ -3,17 +3,17 @@ package com.dev.anton.cbr.domain.model;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class ValuteValue extends BigDecimal {
+public class CurrencyValue extends BigDecimal {
 
     private static final int DEFAULT_SCALE = 4;
     private int scale = DEFAULT_SCALE;
 
-    public ValuteValue(String decimal) {
+    public CurrencyValue(String decimal) {
         super(decimal);
         setScale(scale);
     }
 
-    public ValuteValue(String decimal, int scale) {
+    public CurrencyValue(String decimal, int scale) {
         super(decimal);
         this.scale = scale;
         setScale(scale);

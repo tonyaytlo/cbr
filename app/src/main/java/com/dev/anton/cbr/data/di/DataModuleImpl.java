@@ -1,48 +1,39 @@
 package com.dev.anton.cbr.data.di;
 
-import com.dev.anton.cbr.data.db.CursDbHelper;
-import com.dev.anton.cbr.data.db.DbHelper;
-import com.dev.anton.cbr.data.model.mapper.ValCursEntityMapper;
-import com.dev.anton.cbr.data.net.CbrApi;
-import com.dev.anton.cbr.data.net.CbrApiImpl;
-import com.dev.anton.cbr.data.repository.CursRepositoryImpl;
-import com.dev.anton.cbr.data.repository.datasource.CursDataStoreFactory;
-import com.dev.anton.cbr.domain.repository.CursRepository;
+import com.dev.anton.cbr.data.db.CurrencyDbHelper;
+import com.dev.anton.cbr.data.db.CurrencyDbHelperImpl;
+import com.dev.anton.cbr.data.model.mapper.CurrencyInfoEntityMapper;
+import com.dev.anton.cbr.data.repository.CurrencyRepositoryImpl;
+import com.dev.anton.cbr.data.repository.datasource.CurrencyDataStoreFactory;
+import com.dev.anton.cbr.domain.repository.CurrencyRepository;
 import com.dev.anton.cbr.presentation.CbrApp;
 
 public class DataModuleImpl implements DataModule {
 
-
     @Override
-    public DbHelper provideDbHelper() {
-        return new CursDbHelper(CbrApp.getAppContext());
+    public CurrencyDbHelper provideDbHelper() {
+        return new CurrencyDbHelperImpl(CbrApp.getAppContext());
     }
 
     @Override
-    public CbrApi provideCbrApi() {
-        return new CbrApiImpl();
+    public CurrencyDataStoreFactory provideCursDataStoreFactory(CurrencyDbHelper currencyDbHelper) {
+        return new CurrencyDataStoreFactory(provideDbHelper());
     }
 
     @Override
-    public CursDataStoreFactory provideCursDataStoreFactory(DbHelper dbHelper) {
-        return new CursDataStoreFactory(provideDbHelper());
+    public CurrencyInfoEntityMapper provideValCursEntityMapper() {
+        return new CurrencyInfoEntityMapper();
     }
 
     @Override
-    public ValCursEntityMapper provideValCursEntityMapper() {
-        return new ValCursEntityMapper();
+    public CurrencyRepository provideCursRepository(CurrencyInfoEntityMapper currencyInfoEntityMapper,
+                                                    CurrencyDataStoreFactory currencyDataStoreFactory) {
+        return new CurrencyRepositoryImpl(currencyInfoEntityMapper, currencyDataStoreFactory);
     }
 
     @Override
-    public CursRepository provideCursRepository(ValCursEntityMapper valCursEntityMapper,
-                                                CursDataStoreFactory cursDataStoreFactory) {
-        return new CursRepositoryImpl(valCursEntityMapper, cursDataStoreFactory);
-    }
-
-    @Override
-    public CursRepository getCursRepository() {
+    public CurrencyRepository getCursRepository() {
         return provideCursRepository(provideValCursEntityMapper(), provideCursDataStoreFactory(provideDbHelper()));
     }
-
 
 }

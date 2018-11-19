@@ -2,7 +2,7 @@ package com.dev.anton.cbr.presentation.contract;
 
 import android.content.Context;
 
-import com.dev.anton.cbr.domain.model.ValCurs;
+import com.dev.anton.cbr.domain.model.CurrencyInfo;
 import com.dev.anton.cbr.presentation.presenter.BasePresenter;
 
 public class CurrencyContract {
@@ -15,7 +15,7 @@ public class CurrencyContract {
 
         void hideLoading();
 
-        void setCurrency(ValCurs currency);
+        void setCurrency(CurrencyInfo currency);
 
         void showRetry();
 

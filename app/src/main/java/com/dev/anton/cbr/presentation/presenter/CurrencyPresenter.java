@@ -3,7 +3,7 @@ package com.dev.anton.cbr.presentation.presenter;
 import com.dev.anton.cbr.domain.executor.BaseTask;
 import com.dev.anton.cbr.domain.executor.Task;
 import com.dev.anton.cbr.domain.interactors.CurrencyUseCase;
-import com.dev.anton.cbr.domain.model.ValCurs;
+import com.dev.anton.cbr.domain.model.CurrencyInfo;
 import com.dev.anton.cbr.presentation.contract.CurrencyContract;
 import com.dev.anton.cbr.presentation.exception.ErrorMsgFactory;
 
@@ -27,9 +27,9 @@ public class CurrencyPresenter implements CurrencyContract.CurrencyPresenter {
     private void loadData() {
         view.showLoading();
         task = currencyUseCase.fetchCurs()
-                .setOnCompleteListener(new BaseTask.OnCompleteListener<ValCurs>() {
+                .setOnCompleteListener(new BaseTask.OnCompleteListener<CurrencyInfo>() {
                     @Override
-                    public void onSuccess(ValCurs result) {
+                    public void onSuccess(CurrencyInfo result) {
                         view.hideLoading();
                         view.setCurrency(result);
                     }

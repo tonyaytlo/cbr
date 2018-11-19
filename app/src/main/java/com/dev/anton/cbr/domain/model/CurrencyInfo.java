@@ -2,13 +2,13 @@ package com.dev.anton.cbr.domain.model;
 
 import java.util.List;
 
-public class ValCurs {
+public class CurrencyInfo {
 
     private String date;
 
     private String name;
 
-    private List<Valute> valutes;
+    private List<Currency> currencies;
 
     public String getDate() {
         return date;
@@ -26,11 +26,11 @@ public class ValCurs {
         this.name = name;
     }
 
-    public List<Valute> getValutes() {
-        return valutes;
+    public List<Currency> getCurrencies() {
+        return currencies;
     }
 
-    public void setValutes(List<Valute> valutes) {
-        this.valutes = valutes;
+    public void setCurrencies(List<Currency> currencies) {
+        this.currencies = currencies;
     }
 }

@@ -6,8 +6,8 @@ import org.simpleframework.xml.Root;
 
 import java.util.List;
 
-@Root(name = "ValCurs")
-public class ValCursEntity {
+@Root(name = "CurrencyInfo")
+public class CurrencyInfoEntity {
 
     @Attribute(name = "Date")
     private String date;
@@ -16,7 +16,7 @@ public class ValCursEntity {
     private String name;
 
     @ElementList(inline = true)
-    private List<ValuteEntity> valuteEntities;
+    private List<CurrencyEntity> currencyEntities;
 
     public String getDate() {
         return date;
@@ -34,11 +34,11 @@ public class ValCursEntity {
         this.name = name;
     }
 
-    public List<ValuteEntity> getValuteEntities() {
-        return valuteEntities;
+    public List<CurrencyEntity> getCurrencyEntities() {
+        return currencyEntities;
     }
 
-    public void setValuteEntities(List<ValuteEntity> valuteEntities) {
-        this.valuteEntities = valuteEntities;
+    public void setCurrencyEntities(List<CurrencyEntity> currencyEntities) {
+        this.currencyEntities = currencyEntities;
     }
 }

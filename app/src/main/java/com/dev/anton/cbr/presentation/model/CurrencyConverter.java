@@ -1,7 +1,7 @@
 package com.dev.anton.cbr.presentation.model;
 
-import com.dev.anton.cbr.domain.model.Valute;
-import com.dev.anton.cbr.domain.model.ValuteValue;
+import com.dev.anton.cbr.domain.model.Currency;
+import com.dev.anton.cbr.domain.model.CurrencyValue;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,14 +18,14 @@ public class CurrencyConverter {
         this.scale = scale;
     }
 
-    public ValuteValue convert(ValuteValue currency, Valute currencyFrom, Valute currencyTo) {
+    public CurrencyValue convert(CurrencyValue currency, Currency currencyFrom, Currency currencyTo) {
         final BigDecimal absFrom = getAbsValue(currencyFrom);
         final BigDecimal absTo = getAbsValue(currencyTo);
-        ValuteValue result = new ValuteValue(absFrom.multiply(currency).divide(absTo, scale, roundingDivider).toString());
+        CurrencyValue result = new CurrencyValue(absFrom.multiply(currency).divide(absTo, scale, roundingDivider).toString());
         return result;
     }
 
-    private BigDecimal getAbsValue(Valute valute) {
-        return valute.getValue().divide(new BigDecimal(valute.getNominal()), scale, roundingDivider);
+    private BigDecimal getAbsValue(Currency currency) {
+        return currency.getValue().divide(new BigDecimal(currency.getNominal()), scale, roundingDivider);
     }
 }

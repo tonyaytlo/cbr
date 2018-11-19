@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.dev.anton.cbr.R;
-import com.dev.anton.cbr.domain.model.ValCurs;
+import com.dev.anton.cbr.domain.model.CurrencyInfo;
 import com.dev.anton.cbr.presentation.contract.CurrencyContract;
 import com.dev.anton.cbr.presentation.di.PresentationModuleImpl;
 import com.dev.anton.cbr.presentation.presenter.CurrencyPresenter;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity implements CurrencyContract.View 
     }
 
     @Override
-    public void setCurrency(ValCurs currency) {
+    public void setCurrency(CurrencyInfo currency) {
         ccCurrencyConvert.populate(currency);
     }
 
