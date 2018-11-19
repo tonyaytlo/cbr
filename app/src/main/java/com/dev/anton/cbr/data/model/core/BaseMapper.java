@@ -1,4 +1,4 @@
-package com.dev.anton.cbr.data.entity.base;
+package com.dev.anton.cbr.data.model.core;
 
 public abstract class BaseMapper<IN, OUT> {
 

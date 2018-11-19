@@ -1,8 +1,8 @@
 package com.dev.anton.cbr.data.net;
 
-import com.dev.anton.cbr.data.entity.ValCursEntity;
-import com.dev.anton.cbr.data.entity.base.BaseError;
-import com.dev.anton.cbr.data.entity.base.BaseResponse;
+import com.dev.anton.cbr.data.model.ValCursEntity;
+import com.dev.anton.cbr.data.model.core.BaseError;
+import com.dev.anton.cbr.data.model.core.BaseResponse;
 
 import java.net.MalformedURLException;
 

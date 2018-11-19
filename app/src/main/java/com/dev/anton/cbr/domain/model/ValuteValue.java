@@ -1,11 +1,26 @@
 package com.dev.anton.cbr.domain.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class ValuteValue extends BigDecimal {
 
+    private static final int DEFAULT_SCALE = 4;
+    private int scale = DEFAULT_SCALE;
+
     public ValuteValue(String decimal) {
         super(decimal);
-        setScale(4);
+        setScale(scale);
     }
+
+    public ValuteValue(String decimal, int scale) {
+        super(decimal);
+        this.scale = scale;
+        setScale(scale);
+    }
+
+    public String getValuteString() {
+        return this.stripTrailingZeros().toPlainString();
+    }
+
 }

@@ -1,8 +1,8 @@
-package com.dev.anton.cbr.data.entity.mapper;
+package com.dev.anton.cbr.data.model.mapper;
 
-import com.dev.anton.cbr.data.entity.ValCursEntity;
-import com.dev.anton.cbr.data.entity.ValuteEntity;
-import com.dev.anton.cbr.data.entity.base.BaseMapper;
+import com.dev.anton.cbr.data.model.ValCursEntity;
+import com.dev.anton.cbr.data.model.ValuteEntity;
+import com.dev.anton.cbr.data.model.core.BaseMapper;
 import com.dev.anton.cbr.domain.model.ValCurs;
 import com.dev.anton.cbr.domain.model.Valute;
 import com.dev.anton.cbr.domain.model.ValuteValue;

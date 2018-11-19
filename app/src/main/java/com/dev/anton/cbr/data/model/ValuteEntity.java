@@ -1,4 +1,4 @@
-package com.dev.anton.cbr.data.entity;
+package com.dev.anton.cbr.data.model;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;

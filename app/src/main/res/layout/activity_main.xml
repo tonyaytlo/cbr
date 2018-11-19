@@ -4,15 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MainActivity">
+    android:background="#dedede"
+    tools:context=".presentation.view.activity.MainActivity">
+
+    <com.dev.anton.cbr.presentation.view.CurrencyConvertView
+        android:id="@+id/ccCurrencyConvert"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <com.dev.anton.cbr.presentation.view.LoadingView
+        android:id="@+id/lvLoading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/ccCurrencyConvert"
+        app:layout_constraintEnd_toEndOf="@+id/ccCurrencyConvert"
+        app:layout_constraintStart_toStartOf="@+id/ccCurrencyConvert"
+        app:layout_constraintTop_toTopOf="@+id/ccCurrencyConvert" />
+
+
+    <Button
+        android:id="@+id/btnRetry"
+        style="@style/ButtonBase"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/retry"
+        android:textAllCaps="false"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ccCurrencyConvert" />
 
     <TextView
+        android:id="@+id/tvErrorRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginBottom="8dp"
+        android:text="@string/error_retry_request"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnRetry"
+        app:layout_constraintEnd_toEndOf="@+id/btnRetry"
+        app:layout_constraintStart_toStartOf="@+id/btnRetry" />
+
 
 </android.support.constraint.ConstraintLayout>

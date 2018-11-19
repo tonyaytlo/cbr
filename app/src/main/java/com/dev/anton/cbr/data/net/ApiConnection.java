@@ -2,8 +2,8 @@ package com.dev.anton.cbr.data.net;
 
 import android.support.annotation.Nullable;
 
-import com.dev.anton.cbr.data.entity.base.BaseError;
-import com.dev.anton.cbr.data.entity.base.BaseResponse;
+import com.dev.anton.cbr.data.model.core.BaseError;
+import com.dev.anton.cbr.data.model.core.BaseResponse;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;

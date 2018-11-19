@@ -7,7 +7,7 @@ public class CursDataStoreFactory {
 
     private DbHelper dbHelper;
 
-    CursDataStoreFactory(DbHelper dbHelper) {
+    public CursDataStoreFactory(DbHelper dbHelper) {
         this.dbHelper = dbHelper;
     }
 

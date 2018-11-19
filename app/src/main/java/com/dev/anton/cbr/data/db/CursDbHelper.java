@@ -7,11 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-import com.dev.anton.cbr.data.entity.ValCursEntity;
-import com.dev.anton.cbr.data.entity.ValuteEntity;
-import com.dev.anton.cbr.data.entity.base.BaseError;
-import com.dev.anton.cbr.data.entity.base.BaseResponse;
 import com.dev.anton.cbr.data.exception.CursNotFoundException;
+import com.dev.anton.cbr.data.model.ValCursEntity;
+import com.dev.anton.cbr.data.model.ValuteEntity;
+import com.dev.anton.cbr.data.model.core.BaseError;
+import com.dev.anton.cbr.data.model.core.BaseResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +65,7 @@ public class CursDbHelper extends SQLiteOpenHelper implements DbHelper {
     private static final String SQL_DELETE_VALUTE =
             DROP_TABLE + " " + ValuteEntry.TABLE_NAME;
 
-    CursDbHelper(Context context) {
+    public CursDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -129,8 +129,8 @@ public class CursDbHelper extends SQLiteOpenHelper implements DbHelper {
         ValCursEntity curs = null;
         if (c != null && c.moveToFirst()) {
             curs = new ValCursEntity();
-            curs.setName(c.getColumnName(c.getColumnIndex(ValCursEntry.COLUMN_NAME_DATE)));
-            curs.setDate(c.getString(c.getColumnIndex(ValCursEntry.COLUMN_NAME)));
+            curs.setName(c.getString(c.getColumnIndex(ValCursEntry.COLUMN_NAME)));
+            curs.setDate(c.getString(c.getColumnIndex(ValCursEntry.COLUMN_NAME_DATE)));
             curs.setValuteEntities(getListValute(c.getInt(c.getColumnIndex(ValuteEntry._ID))));
         }
         return curs;

@@ -1,4 +1,4 @@
-package com.dev.anton.cbr.data.entity;
+package com.dev.anton.cbr.data.model;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
@@ -6,7 +6,7 @@ import org.simpleframework.xml.Root;
 
 import java.util.List;
 
-@Root
+@Root(name = "ValCurs")
 public class ValCursEntity {
 
     @Attribute(name = "Date")
@@ -18,7 +18,9 @@ public class ValCursEntity {
     @ElementList(inline = true)
     private List<ValuteEntity> valuteEntities;
 
-    public String getDate() { return date; }
+    public String getDate() {
+        return date;
+    }
 
     public void setDate(String date) {
         this.date = date;
@@ -36,5 +38,7 @@ public class ValCursEntity {
         return valuteEntities;
     }
 
-    public void setValuteEntities(List<ValuteEntity> valuteEntities) { this.valuteEntities = valuteEntities; }
+    public void setValuteEntities(List<ValuteEntity> valuteEntities) {
+        this.valuteEntities = valuteEntities;
+    }
 }
