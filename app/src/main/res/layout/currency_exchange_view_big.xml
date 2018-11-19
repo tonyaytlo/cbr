@@ -1,0 +1,140 @@
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".presentation.view.activity.MainActivity">
+
+    <com.dev.anton.cbr.presentation.view.CurrencyEditText
+        android:id="@+id/etCurrencyFrom"
+        style="@style/CurrencyEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/srCurrencyFrom"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCurrencyTo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="3dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvEqual"
+        app:layout_constraintEnd_toStartOf="@+id/srCurrencyTo"
+        app:layout_constraintStart_toEndOf="@+id/tvEqual"
+        app:layout_constraintTop_toTopOf="@+id/tvEqual" />
+
+    <Spinner
+        android:id="@+id/srCurrencyFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/spinner_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/etCurrencyFrom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etCurrencyFrom"
+        app:layout_constraintTop_toTopOf="@+id/etCurrencyFrom" />
+
+    <Spinner
+        android:id="@+id/srCurrencyTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/spinner_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/tvCurrencyTo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvCurrencyTo" />
+
+    <ImageView
+        android:id="@+id/ivClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_clock_alert_outline_black_18dp"
+        android:tint="@color/colorWarning"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bBottom"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textColor="@color/colorDescriptionText"
+        android:textSize="11sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/ivClock"
+        app:layout_constraintStart_toEndOf="@+id/ivClock"
+        app:layout_constraintTop_toTopOf="@+id/ivClock" />
+
+    <TextView
+        android:id="@+id/tvEqual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/equal"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/etCurrencyFrom"
+        app:layout_constraintTop_toBottomOf="@+id/etCurrencyFrom" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/bBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="tvCurrencyTo, srCurrencyTo, tvEqual" />
+
+    <Button
+        android:id="@+id/btnConvert"
+        style="@style/ButtonBase"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginTop="24dp"
+        android:enabled="false"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="@string/convert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bBottom"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="0.4dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/colorDivider"
+        app:layout_constraintEnd_toEndOf="@+id/srCurrencyFrom"
+        app:layout_constraintStart_toStartOf="@+id/etCurrencyFrom"
+        app:layout_constraintTop_toBottomOf="@+id/etCurrencyFrom" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="0dp"
+        android:layout_height="0.4dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/colorDivider"
+        app:layout_constraintEnd_toEndOf="@+id/srCurrencyTo"
+        app:layout_constraintStart_toStartOf="@+id/etCurrencyFrom"
+        app:layout_constraintTop_toBottomOf="@+id/tvCurrencyTo" />
+
+</android.support.constraint.ConstraintLayout>

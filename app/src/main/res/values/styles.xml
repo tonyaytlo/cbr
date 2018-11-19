@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- EditText theme. -->
+    <style name="CurrencyEditText" parent="Base.V7.Widget.AppCompat.EditText">
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAlignment">textEnd</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <!-- Button theme. -->
+    <style name="ButtonBase" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/btn_selector</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/colorTextButton</item>
+    </style>
+
+</resources>
