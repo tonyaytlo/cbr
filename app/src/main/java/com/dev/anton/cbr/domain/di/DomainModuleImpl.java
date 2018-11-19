@@ -6,7 +6,7 @@ import com.dev.anton.cbr.domain.repository.CurrencyRepository;
 
 public class DomainModuleImpl implements DomainModule {
 
-    DataModule dataModule;
+    private final DataModule dataModule;
 
     public DomainModuleImpl(DataModule dataModule) {
         this.dataModule = dataModule;

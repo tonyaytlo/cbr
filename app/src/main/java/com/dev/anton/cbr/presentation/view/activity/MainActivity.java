@@ -40,8 +40,12 @@ public class MainActivity extends BaseActivity implements CurrencyContract.View 
             }
         });
 
-        presenter = new CurrencyPresenter(PresentationModuleImpl.INSTANCE.getCurrencyUseCase());
+        presenter = providePresenter();
         presenter.onAttachView(this);
+    }
+
+    private CurrencyPresenter providePresenter() {
+        return new CurrencyPresenter(PresentationModuleImpl.INSTANCE.getCurrencyUseCase());
     }
 
     @Override
