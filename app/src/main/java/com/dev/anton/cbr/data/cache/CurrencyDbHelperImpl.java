@@ -1,4 +1,4 @@
-package com.dev.anton.cbr.data.db;
+package com.dev.anton.cbr.data.cache;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -20,7 +20,7 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
 
     //DATABASE INFO
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "Curs.db";
+    private static final String DATABASE_NAME = "Currency.db";
     //BASE COMMAND
     private static final String CREATE_TABLE = "CREATE TABLE";
     private static final String DROP_TABLE = "DROP TABLE IF EXISTS";
@@ -31,6 +31,7 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
         static final String COLUMN_NAME_DATE = "Date";
         static final String COLUMN_NAME = "Name";
     }
+
     //COMMAND
     private static final String SQL_CREATE_CURRENCY_INFO =
             CREATE_TABLE + " " + CurrencyInfoEntry.TABLE_NAME + " (" +
@@ -50,6 +51,7 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
         static final String COLUMN_NAME = "Name";
         static final String COLUMN_NAME_VALUE = "Value";
     }
+
     //COMMAND
     private static final String SQL_CREATE_CURRENCY =
             CREATE_TABLE + " " + CurrencyEntry.TABLE_NAME + " (" +
@@ -85,7 +87,7 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    private void insertValCurs(CurrencyInfoEntity curs) {
+    private void insertCurrencyInfo(CurrencyInfoEntity curs) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -94,16 +96,16 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
         values.put(CurrencyInfoEntry.COLUMN_NAME, curs.getName());
 
         long valCursId = db.insert(CurrencyInfoEntry.TABLE_NAME, null, values);
-        insertValuteList(curs.getCurrencyEntities(), valCursId);
+        insertCurrencyList(curs.getCurrencyEntities(), valCursId);
     }
 
-    private void insertValuteList(List<CurrencyEntity> valuteList, long valCursId) {
+    private void insertCurrencyList(List<CurrencyEntity> valuteList, long valCursId) {
         for (CurrencyEntity valute : valuteList) {
-            insertValute(valute, valCursId);
+            insertCurrency(valute, valCursId);
         }
     }
 
-    private void insertValute(CurrencyEntity currencyEntity, long valCursId) {
+    private void insertCurrency(CurrencyEntity currencyEntity, long valCursId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -118,7 +120,7 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
         db.insert(CurrencyEntry.TABLE_NAME, null, values);
     }
 
-    private CurrencyInfoEntity getValCurs() {
+    private CurrencyInfoEntity readCurrencyInfo() {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + CurrencyInfoEntry.TABLE_NAME + " LIMIT 1";
@@ -129,13 +131,13 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
             curs = new CurrencyInfoEntity();
             curs.setName(c.getString(c.getColumnIndex(CurrencyInfoEntry.COLUMN_NAME)));
             curs.setDate(c.getString(c.getColumnIndex(CurrencyInfoEntry.COLUMN_NAME_DATE)));
-            curs.setCurrencyEntities(getListValute(c.getInt(c.getColumnIndex(CurrencyEntry._ID))));
+            curs.setCurrencyEntities(readCurrencyList(c.getInt(c.getColumnIndex(CurrencyEntry._ID))));
         }
         return curs;
 
     }
 
-    private List<CurrencyEntity> getListValute(long valCursId) {
+    private List<CurrencyEntity> readCurrencyList(long valCursId) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + CurrencyEntry.TABLE_NAME + " WHERE "
@@ -169,7 +171,7 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
     @Override
     public BaseResponse<CurrencyInfoEntity> getCurrencyInfo() { //mb replace to simple if
         try {
-            return BaseResponse.success(getValCurs());
+            return BaseResponse.success(readCurrencyInfo());
         } catch (Exception ignored) {
             return BaseResponse.error(new BaseError(new CurrencyInfoNotFoundException()));
         }
@@ -180,7 +182,7 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
         if (isCached()) {
             clearCache();
         }
-        insertValCurs(curs);
+        insertCurrencyInfo(curs);
     }
 
     @Override

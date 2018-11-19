@@ -1,6 +1,6 @@
 package com.dev.anton.cbr.data.repository.datasource;
 
-import com.dev.anton.cbr.data.db.CurrencyDbHelper;
+import com.dev.anton.cbr.data.cache.CurrencyDbHelper;
 import com.dev.anton.cbr.data.net.CbrApiImpl;
 
 public class CurrencyDataStoreFactory {

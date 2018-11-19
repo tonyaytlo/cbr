@@ -1,4 +1,4 @@
-package com.dev.anton.cbr.data.db;
+package com.dev.anton.cbr.data.cache;
 
 import com.dev.anton.cbr.data.model.CurrencyInfoEntity;
 import com.dev.anton.cbr.data.model.core.BaseResponse;
