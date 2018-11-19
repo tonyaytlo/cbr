@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
     <!-- EditText theme. -->
     <style name="CurrencyEditText" parent="Base.V7.Widget.AppCompat.EditText">
         <item name="android:inputType">numberDecimal</item>

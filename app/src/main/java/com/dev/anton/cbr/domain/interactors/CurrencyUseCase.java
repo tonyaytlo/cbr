@@ -8,7 +8,7 @@ import com.dev.anton.cbr.domain.repository.CurrencyRepository;
 
 import java.util.concurrent.Callable;
 
-public class CurrencyUseCase implements UseCase {
+public class CurrencyUseCase {
 
     private CurrencyRepository repository;
 
