@@ -6,9 +6,6 @@ ext {
 }
 
 android {
-    dataBinding {
-        enabled = true
-    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.dev.anton.cbr"
@@ -34,6 +31,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
+    //xml serializer
     implementation "org.simpleframework:simple-xml:$simple_xml"
 }
