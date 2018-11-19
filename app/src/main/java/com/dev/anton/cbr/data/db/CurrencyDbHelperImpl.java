@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
-import com.dev.anton.cbr.data.exception.CursNotFoundException;
+import com.dev.anton.cbr.data.exception.CurrencyInfoNotFoundException;
 import com.dev.anton.cbr.data.model.CurrencyInfoEntity;
 import com.dev.anton.cbr.data.model.CurrencyEntity;
 import com.dev.anton.cbr.data.model.core.BaseError;
@@ -171,7 +171,7 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
         try {
             return BaseResponse.success(getValCurs());
         } catch (Exception ignored) {
-            return BaseResponse.error(new BaseError(new CursNotFoundException()));
+            return BaseResponse.error(new BaseError(new CurrencyInfoNotFoundException()));
         }
     }
 

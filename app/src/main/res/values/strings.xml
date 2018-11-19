@@ -6,7 +6,7 @@
     <string name="equal">=</string>
     <string name="date_update_format">Дата обновления: %s</string>
     <!-- Error messages -->
-    <string name="error_curs_not_found">Не удалось получить данные о курсе</string>
+    <string name="error_currency_info_not_found">Не удалось получить данные о валютах</string>
     <string name="error_unknown">Неизвестная ошибка</string>
     <string name="error_retry_request">Произошла ошибка, повторить запрос?</string>
     <!-- MainActivity -->
