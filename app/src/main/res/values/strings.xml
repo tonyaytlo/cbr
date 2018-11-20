@@ -4,7 +4,7 @@
     <!-- CurrencyConvertView text -->
     <string name="convert">Перевести</string>
     <string name="equal">=</string>
-    <string name="date_update_format">Дата обновления: %s</string>
+    <string name="date_update_format">Курс от %s</string>
     <!-- Error messages -->
     <string name="error_currency_info_not_found">Не удалось получить данные о валютах</string>
     <string name="error_unknown">Неизвестная ошибка</string>
