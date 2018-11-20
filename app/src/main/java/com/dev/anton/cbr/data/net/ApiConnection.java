@@ -17,7 +17,7 @@ import java.net.URL;
 class ApiConnection<T> {
 
     private static final String GET = "GET";
-    private final String DEFAULT_CHARSET = "windows-1251";
+    private final String defaultCharset = "windows-1251";
     private final URL url;
 
     private final Class<T> typeResponse;
@@ -79,7 +79,7 @@ class ApiConnection<T> {
         int bytesRead;
         String strFileContents = "";
         while ((bytesRead = in.read(contents)) != -1) {
-            strFileContents = new String(contents, 0, bytesRead, DEFAULT_CHARSET);
+            strFileContents = new String(contents, 0, bytesRead, defaultCharset);
             System.out.print(strFileContents);
         }
         return strFileContents;
