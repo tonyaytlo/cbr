@@ -34,7 +34,7 @@ public class BaseResponse<T> {
         return error == null;
     }
 
-    public <OUT> BaseResponse<OUT> transform(BaseMapper<T, OUT> mapper) {
+    public <OUT> BaseResponse<OUT> transform(@NonNull BaseMapper<T, OUT> mapper) {
         if (this.isSuccess()) {
             return BaseResponse.success(mapper.mapTo(this.result));
         } else {
