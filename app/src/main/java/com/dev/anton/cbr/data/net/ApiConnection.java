@@ -65,14 +65,16 @@ class ApiConnection<T> {
 
     private T serialize(String response) throws SerializeException {
         Serializer serializer = new Persister();
-        T result = null;
+        T result;
         try {
             result = serializer.read(typeResponse, response);
+            if (result == null) {
+                throw new NullPointerException();
+            }
+        } catch (NullPointerException npe) {
+            throw new SerializeException(npe);
         } catch (Exception e) {
             throw new SerializeException(e);
-        }
-        if (result == null) {
-            throw new SerializeException(new NullPointerException());
         }
         return result;
     }
