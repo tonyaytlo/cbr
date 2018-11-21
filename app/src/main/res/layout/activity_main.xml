@@ -10,17 +10,16 @@
     <com.dev.anton.cbr.presentation.view.CurrencyConvertView
         android:id="@+id/ccCurrencyConvert"
         android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="@dimen/currency_convert_height"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
 
     <com.dev.anton.cbr.presentation.view.LoadingView
         android:id="@+id/lvLoading"
@@ -32,16 +31,13 @@
         app:layout_constraintStart_toStartOf="@+id/ccCurrencyConvert"
         app:layout_constraintTop_toTopOf="@+id/ccCurrencyConvert" />
 
-
     <Button
         android:id="@+id/btnRetry"
         style="@style/ButtonBase"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:paddingLeft="@dimen/margin_padding_normal"
+        android:paddingRight="@dimen/margin_padding_normal"
         android:text="@string/retry"
         android:textAllCaps="false"
         android:visibility="gone"
@@ -54,7 +50,7 @@
         android:id="@+id/tvErrorRetry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/margin_padding_small"
         android:text="@string/error_retry_request"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnRetry"

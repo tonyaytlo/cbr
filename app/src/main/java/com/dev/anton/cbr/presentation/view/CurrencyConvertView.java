@@ -49,7 +49,7 @@ public class CurrencyConvertView extends CardView {
     }
 
     private void init(AttributeSet atttrs) {
-        setRadius(getContext().getResources().getDimension(R.dimen.card_corner_radius));
+        setRadius(getContext().getResources().getDimension(R.dimen.corner_radius));
         inflate(getContext(), R.layout.currency_exchange_view_big, this);
 
         etCurrencyFrom = findViewById(R.id.etCurrencyFrom);

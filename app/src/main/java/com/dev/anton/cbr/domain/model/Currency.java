@@ -1,5 +1,7 @@
 package com.dev.anton.cbr.domain.model;
 
+import java.util.Objects;
+
 public class Currency {
 
     public Currency(String id) {
@@ -60,5 +62,22 @@ public class Currency {
 
     public void setValue(CurrencyValue value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Currency that = (Currency) o;
+
+        return numCode == that.numCode &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(charCode, that.charCode) &&
+                Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, numCode, charCode, value);
     }
 }

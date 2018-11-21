@@ -5,6 +5,7 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.util.List;
+import java.util.Objects;
 
 @Root(name = "ValCurs")
 public class CurrencyInfoEntity {
@@ -40,5 +41,19 @@ public class CurrencyInfoEntity {
 
     public void setCurrencyEntities(List<CurrencyEntity> currencyEntities) {
         this.currencyEntities = currencyEntities;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CurrencyInfoEntity that = (CurrencyInfoEntity) o;
+        return Objects.equals(date, that.date) &&
+                Objects.equals(currencyEntities, that.currencyEntities);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, currencyEntities);
     }
 }

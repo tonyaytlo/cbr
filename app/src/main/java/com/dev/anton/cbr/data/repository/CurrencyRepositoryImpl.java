@@ -1,5 +1,7 @@
 package com.dev.anton.cbr.data.repository;
 
+import android.support.annotation.NonNull;
+
 import com.dev.anton.cbr.data.model.CurrencyInfoEntity;
 import com.dev.anton.cbr.data.model.core.BaseResponse;
 import com.dev.anton.cbr.data.model.mapper.CurrencyInfoEntityMapper;
@@ -13,8 +15,8 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
     private final CurrencyDataStoreFactory currencyDataStoreFactory;
 
 
-    public CurrencyRepositoryImpl(CurrencyInfoEntityMapper currencyInfoEntityMapper,
-                                  CurrencyDataStoreFactory currencyDataStoreFactory) {
+    public CurrencyRepositoryImpl(@NonNull CurrencyInfoEntityMapper currencyInfoEntityMapper,
+                                  @NonNull CurrencyDataStoreFactory currencyDataStoreFactory) {
         this.currencyInfoEntityMapper = currencyInfoEntityMapper;
         this.currencyDataStoreFactory = currencyDataStoreFactory;
     }
@@ -30,6 +32,6 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
         if (response.isSuccess()) {
             return response.transform(currencyInfoEntityMapper);
         }
-        return getCurs();//if error try to read from cache
+        return getCurs();
     }
 }
