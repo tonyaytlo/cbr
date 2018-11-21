@@ -90,8 +90,8 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
     private void insertCurrencyInfo(CurrencyInfoEntity currencyInfoEntity) {
         SQLiteDatabase db = this.getWritableDatabase();
         long currencyInfoId = -1;
-        db.beginTransaction();
 
+        db.beginTransaction();
         try {
             currencyInfoId = db.insert(CurrencyInfoEntry.TABLE_NAME, null,
                     prepareCurrencyInfoCV(currencyInfoEntity));
@@ -191,10 +191,10 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
 
     @Override
     public void clearCache() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + CurrencyInfoEntry.TABLE_NAME);
-        db.execSQL("DELETE FROM " + CurrencyEntry.TABLE_NAME);
-        db.close();
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            db.execSQL("DELETE FROM " + CurrencyInfoEntry.TABLE_NAME);
+            db.execSQL("DELETE FROM " + CurrencyEntry.TABLE_NAME);
+        }
     }
 
     @Override
