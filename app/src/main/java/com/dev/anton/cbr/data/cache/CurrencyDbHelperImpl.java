@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 
 import com.dev.anton.cbr.data.exception.CurrencyInfoNotFoundException;
-import com.dev.anton.cbr.data.model.CurrencyInfoEntity;
 import com.dev.anton.cbr.data.model.CurrencyEntity;
+import com.dev.anton.cbr.data.model.CurrencyInfoEntity;
 import com.dev.anton.cbr.data.model.core.BaseError;
 import com.dev.anton.cbr.data.model.core.BaseResponse;
 
@@ -87,78 +87,106 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    private void insertCurrencyInfo(CurrencyInfoEntity curs) {
+    private void insertCurrencyInfo(CurrencyInfoEntity currencyInfoEntity) {
         SQLiteDatabase db = this.getWritableDatabase();
+        long currencyInfoId = -1;
+        db.beginTransaction();
 
+        try {
+            currencyInfoId = db.insert(CurrencyInfoEntry.TABLE_NAME, null,
+                    prepareCurrencyInfoCV(currencyInfoEntity));
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+            db.close();
+        }
+
+        if (currencyInfoId != -1 && currencyInfoEntity.getCurrencyEntities() != null &&
+                !currencyInfoEntity.getCurrencyEntities().isEmpty()) {
+            insertCurrencyList(currencyInfoEntity.getCurrencyEntities(), currencyInfoId);
+        }
+    }
+
+
+    private ContentValues prepareCurrencyInfoCV(CurrencyInfoEntity curs) {
         ContentValues values = new ContentValues();
         values.put(CurrencyInfoEntry._ID, 1);
         values.put(CurrencyInfoEntry.COLUMN_NAME_DATE, curs.getDate());
         values.put(CurrencyInfoEntry.COLUMN_NAME, curs.getName());
-
-        long valCursId = db.insert(CurrencyInfoEntry.TABLE_NAME, null, values);
-        insertCurrencyList(curs.getCurrencyEntities(), valCursId);
+        return values;
     }
 
-    private void insertCurrencyList(List<CurrencyEntity> valuteList, long valCursId) {
-        for (CurrencyEntity valute : valuteList) {
-            insertCurrency(valute, valCursId);
+    private void insertCurrencyList(final List<CurrencyEntity> currencyEntityList, long currencyInfoId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for (CurrencyEntity currencyEntity : currencyEntityList) {
+                db.insert(CurrencyEntry.TABLE_NAME, null,
+                        prepareCurrencyCV(currencyEntity, currencyInfoId));
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+            db.close();
         }
     }
 
-    private void insertCurrency(CurrencyEntity currencyEntity, long valCursId) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    private void insertCurrency(final CurrencyEntity currencyEntity, long currencyInfoId) {
+        insertCurrencyList(new ArrayList<CurrencyEntity>(1) {{
+            add(currencyEntity);
+        }}, currencyInfoId);
+    }
 
+    private ContentValues prepareCurrencyCV(CurrencyEntity currencyEntity, long currencyInfoId) {
         ContentValues values = new ContentValues();
         values.put(CurrencyEntry._ID, currencyEntity.getId());
-        values.put(CurrencyEntry.COLUMN_NAME_ID_CURRENCY_INFO, valCursId);
+        values.put(CurrencyEntry.COLUMN_NAME_ID_CURRENCY_INFO, currencyInfoId);
         values.put(CurrencyEntry.COLUMN_NAME_NUM_CODE, currencyEntity.getNumCode());
         values.put(CurrencyEntry.COLUMN_NAME_CHAR_CODE, currencyEntity.getCharCode());
         values.put(CurrencyEntry.COLUMN_NAME_NOMINAL, currencyEntity.getNominal());
         values.put(CurrencyEntry.COLUMN_NAME, currencyEntity.getName());
         values.put(CurrencyEntry.COLUMN_NAME_VALUE, currencyEntity.getValue());
-
-        db.insert(CurrencyEntry.TABLE_NAME, null, values);
+        return values;
     }
 
     private CurrencyInfoEntity readCurrencyInfo() {
-        SQLiteDatabase db = this.getReadableDatabase();
-
         String selectQuery = "SELECT  * FROM " + CurrencyInfoEntry.TABLE_NAME + " LIMIT 1";
-        Cursor c = db.rawQuery(selectQuery, null);
+        CurrencyInfoEntity currencyInfo = null;
 
-        CurrencyInfoEntity curs = null;
-        if (c != null && c.moveToFirst()) {
-            curs = new CurrencyInfoEntity();
-            curs.setName(c.getString(c.getColumnIndex(CurrencyInfoEntry.COLUMN_NAME)));
-            curs.setDate(c.getString(c.getColumnIndex(CurrencyInfoEntry.COLUMN_NAME_DATE)));
-            curs.setCurrencyEntities(readCurrencyList(c.getInt(c.getColumnIndex(CurrencyEntry._ID))));
+        try (SQLiteDatabase db = this.getReadableDatabase();
+             Cursor c = db.rawQuery(selectQuery, null)) {
+            if (c != null && c.moveToFirst()) {
+                currencyInfo = new CurrencyInfoEntity();
+                currencyInfo.setName(c.getString(c.getColumnIndex(CurrencyInfoEntry.COLUMN_NAME)));
+                currencyInfo.setDate(c.getString(c.getColumnIndex(CurrencyInfoEntry.COLUMN_NAME_DATE)));
+                currencyInfo.setCurrencyEntities(readCurrencyList(c.getInt(c.getColumnIndex(CurrencyEntry._ID))));
+            }
         }
-        return curs;
-
+        return currencyInfo;
     }
 
-    private List<CurrencyEntity> readCurrencyList(long valCursId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
+    private List<CurrencyEntity> readCurrencyList(long currencyInfoId) {
         String selectQuery = "SELECT  * FROM " + CurrencyEntry.TABLE_NAME + " WHERE "
-                + CurrencyEntry.COLUMN_NAME_ID_CURRENCY_INFO + " = " + valCursId;
-        Cursor c = db.rawQuery(selectQuery, null);
+                + CurrencyEntry.COLUMN_NAME_ID_CURRENCY_INFO + " = " + currencyInfoId;
+        List<CurrencyEntity> currencyEntityList = null;
 
-        List<CurrencyEntity> valuteList = null;
-        if (c.moveToFirst()) {
-            valuteList = new ArrayList<>(25);
-            do {
-                CurrencyEntity valute = new CurrencyEntity();
-                valute.setId(c.getString((c.getColumnIndex(CurrencyEntry._ID))));
-                valute.setNumCode(c.getInt((c.getColumnIndex(CurrencyEntry.COLUMN_NAME_NUM_CODE))));
-                valute.setCharCode(c.getString((c.getColumnIndex(CurrencyEntry.COLUMN_NAME_CHAR_CODE))));
-                valute.setNominal(c.getInt((c.getColumnIndex(CurrencyEntry.COLUMN_NAME_NOMINAL))));
-                valute.setName(c.getString((c.getColumnIndex(CurrencyEntry.COLUMN_NAME))));
-                valute.setValue(c.getString((c.getColumnIndex(CurrencyEntry.COLUMN_NAME_VALUE))));
-                valuteList.add(valute);
-            } while (c.moveToNext());
+        try (SQLiteDatabase db = this.getReadableDatabase();
+             Cursor c = db.rawQuery(selectQuery, null)) {
+            if (c != null && c.moveToFirst()) {
+                currencyEntityList = new ArrayList<>(25);
+                do {
+                    CurrencyEntity currencyEntity = new CurrencyEntity();
+                    currencyEntity.setId(c.getString((c.getColumnIndex(CurrencyEntry._ID))));
+                    currencyEntity.setNumCode(c.getInt((c.getColumnIndex(CurrencyEntry.COLUMN_NAME_NUM_CODE))));
+                    currencyEntity.setCharCode(c.getString((c.getColumnIndex(CurrencyEntry.COLUMN_NAME_CHAR_CODE))));
+                    currencyEntity.setNominal(c.getInt((c.getColumnIndex(CurrencyEntry.COLUMN_NAME_NOMINAL))));
+                    currencyEntity.setName(c.getString((c.getColumnIndex(CurrencyEntry.COLUMN_NAME))));
+                    currencyEntity.setValue(c.getString((c.getColumnIndex(CurrencyEntry.COLUMN_NAME_VALUE))));
+                    currencyEntityList.add(currencyEntity);
+                } while (c.moveToNext());
+            }
         }
-        return valuteList;
+        return currencyEntityList;
     }
 
     @Override
@@ -166,34 +194,45 @@ public class CurrencyDbHelperImpl extends SQLiteOpenHelper implements CurrencyDb
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + CurrencyInfoEntry.TABLE_NAME);
         db.execSQL("DELETE FROM " + CurrencyEntry.TABLE_NAME);
+        db.close();
     }
 
     @Override
-    public BaseResponse<CurrencyInfoEntity> getCurrencyInfo() { //mb replace to simple if
+    public BaseResponse<CurrencyInfoEntity> getCurrencyInfo() {
+        CurrencyInfoEntity currencyInfoEntity = null;
         try {
-            return BaseResponse.success(readCurrencyInfo());
-        } catch (Exception ignored) {
-            return BaseResponse.error(new BaseError(new CurrencyInfoNotFoundException()));
+            currencyInfoEntity = readCurrencyInfo();
+            if (currencyInfoEntity == null) {
+                throw new NullPointerException();
+            }
+        } catch (NullPointerException npe) {
+            return BaseResponse.error(new BaseError(new CurrencyInfoNotFoundException(npe)));
+        } catch (Exception e) {
+            return BaseResponse.error(new BaseError(new CurrencyInfoNotFoundException(e)));
         }
+        return BaseResponse.success(currencyInfoEntity);
     }
 
     @Override
-    public void saveCurrencyInfo(CurrencyInfoEntity curs) {
+    public void saveCurrencyInfo(CurrencyInfoEntity currencyInfoEntity) {
+        if (currencyInfoEntity == null) {
+            return;
+        }
         if (isCached()) {
             clearCache();
         }
-        insertCurrencyInfo(curs);
+        insertCurrencyInfo(currencyInfoEntity);
     }
 
     @Override
     public boolean isCached() {
-        SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT  count(*) FROM " + CurrencyInfoEntry.TABLE_NAME;
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c != null && c.moveToFirst()) {
-            return c.getInt(0) > 0;
+        boolean isCached;
+        try (SQLiteDatabase db = this.getReadableDatabase();
+             Cursor c = db.rawQuery(selectQuery, null)) {
+            isCached = c.moveToFirst() && c.getInt(0) > 0;
         }
-        return false;
+        return isCached;
     }
 
 }
