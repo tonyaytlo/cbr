@@ -36,6 +36,8 @@
         style="@style/ButtonBase"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/button_height"
+        android:paddingLeft="@dimen/margin_padding_normal"
+        android:paddingRight="@dimen/margin_padding_normal"
         android:text="@string/retry"
         android:textAllCaps="false"
         android:visibility="gone"
