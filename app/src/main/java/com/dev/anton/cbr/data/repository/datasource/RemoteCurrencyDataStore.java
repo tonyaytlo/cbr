@@ -16,7 +16,7 @@ class RemoteCurrencyDataStore implements CurrencyDataStore {
     }
 
     public BaseResponse<CurrencyInfoEntity> getCurrencyInfo() {
-        BaseResponse<CurrencyInfoEntity> response = cbrApi.getCurs();
+        BaseResponse<CurrencyInfoEntity> response = cbrApi.getCurrencyInfo();
         if (response.isSuccess()) {
             currencyDbHelper.saveCurrencyInfo(response.result);
         }

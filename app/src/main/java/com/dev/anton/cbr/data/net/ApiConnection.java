@@ -1,7 +1,9 @@
 package com.dev.anton.cbr.data.net;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.dev.anton.cbr.data.exception.SerializeException;
 import com.dev.anton.cbr.data.model.core.BaseError;
 import com.dev.anton.cbr.data.model.core.BaseResponse;
 
@@ -13,23 +15,26 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 
 class ApiConnection<T> {
 
     private static final String GET = "GET";
+
     private final String defaultCharset = "windows-1251";
     private final URL url;
-
     private final Class<T> typeResponse;
     private BaseResponse<T> response;
 
-    private ApiConnection(String url, Class<T> typeResponse) throws MalformedURLException {
+    private ApiConnection(@NonNull String url, @NonNull Class<T> typeResponse) throws MalformedURLException {
+        Objects.requireNonNull(url);
+        Objects.requireNonNull(typeResponse);
         this.url = new URL(url);
         this.typeResponse = typeResponse;
     }
 
     @SuppressWarnings("unchecked")
-    static <T> ApiConnection createGET(String url, Class<T> responseType) throws MalformedURLException {
+    static <T> ApiConnection createGET(@NonNull String url, @NonNull Class<T> responseType) throws MalformedURLException {
         return new ApiConnection(url, responseType);
     }
 
@@ -40,49 +45,46 @@ class ApiConnection<T> {
     }
 
     private void connectToApi() {
-        HttpURLConnection urlConnection = null;
-        BufferedInputStream in = null;
-        try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod(GET);
-            urlConnection.connect();
-            in = new BufferedInputStream(urlConnection.getInputStream());
-            String strResponse = readStream(in);
+        try (AutoClosableConnection connectionWrapper =
+                     new AutoClosableConnection((HttpURLConnection) url.openConnection())) {
+            connectionWrapper.getConnection().setRequestMethod(GET);
+            connectionWrapper.getConnection().connect();
 
-            Serializer serializer = new Persister();
-            T result = serializer.read(typeResponse, strResponse);
+            String strResponse;
+            try (BufferedInputStream in =
+                         new BufferedInputStream(connectionWrapper.getConnection().getInputStream())) {
+                strResponse = readStream(in);
+            }
 
-            response = BaseResponse.success(result);
-        } catch (Exception e) {
+            T typedResponse = serialize(strResponse);
+            response = BaseResponse.success(typedResponse);
+        } catch (IOException | SerializeException e) {
             response = BaseResponse.error(new BaseError(e));
-        } finally {
-            safeCloseStream(in);
-            safeDisconnect(urlConnection);
         }
     }
 
-    private void safeDisconnect(HttpURLConnection urlConnection) {
-        if (urlConnection != null) {
-            urlConnection.disconnect();
-        }
-    }
-
-    private void safeCloseStream(BufferedInputStream in) {
+    private T serialize(String response) throws SerializeException {
+        Serializer serializer = new Persister();
+        T result = null;
         try {
-            in.close();
-        } catch (Exception ignored) {
+            result = serializer.read(typeResponse, response);
+        } catch (Exception e) {
+            throw new SerializeException(e);
         }
+        if (result == null) {
+            throw new SerializeException(new NullPointerException());
+        }
+        return result;
     }
 
     private String readStream(BufferedInputStream in) throws IOException {
         byte[] contents = new byte[20000];
         int bytesRead;
-        String strFileContents = "";
+        String strStreamContents = "";
         while ((bytesRead = in.read(contents)) != -1) {
-            strFileContents = new String(contents, 0, bytesRead, defaultCharset);
-            System.out.print(strFileContents);
+            strStreamContents = new String(contents, 0, bytesRead, defaultCharset);
         }
-        return strFileContents;
+        return strStreamContents;
     }
 
 }
