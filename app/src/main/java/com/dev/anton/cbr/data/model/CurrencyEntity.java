@@ -4,6 +4,8 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import java.util.Objects;
+
 @Root(name = "Valute")
 public class CurrencyEntity {
 
@@ -71,5 +73,22 @@ public class CurrencyEntity {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CurrencyEntity that = (CurrencyEntity) o;
+
+        return numCode == that.numCode &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(charCode, that.charCode) &&
+                Objects.equals(value, that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, numCode, charCode, value);
     }
 }
