@@ -72,15 +72,17 @@
 
     <TextView
         android:id="@+id/tvDesc"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_padding_tiny"
+        android:layout_marginEnd="8dp"
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textColor="@color/colorDescriptionText"
         android:textSize="@dimen/text_size_small"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/ivClock"
+        app:layout_constraintEnd_toStartOf="@+id/btnConvert"
         app:layout_constraintStart_toEndOf="@+id/ivClock"
         app:layout_constraintTop_toTopOf="@+id/ivClock" />
 
