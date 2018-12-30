@@ -17,10 +17,9 @@
     <dimen name="margin_padding_normal">16dp</dimen>
     <dimen name="margin_padding_xnormal">20dp</dimen>
     <dimen name="margin_padding_large">24dp</dimen>
-
-    <dimen name="corner_radius">6dp</dimen>
+    <!-- View components size -->
+    <dimen name="card_corner_radius">6dp</dimen>
     <dimen name="divider_height">1dp</dimen>
-
     <dimen name="button_height">40dp</dimen>
     <dimen name="currency_convert_height">200dp</dimen>
 </resources>

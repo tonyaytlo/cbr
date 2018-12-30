@@ -49,7 +49,7 @@ public class CurrencyConvertView extends CardView {
     }
 
     private void init(AttributeSet atttrs) {
-        setRadius(getContext().getResources().getDimension(R.dimen.corner_radius));
+        setRadius(getContext().getResources().getDimension(R.dimen.card_corner_radius));
         inflate(getContext(), R.layout.currency_exchange_view_big, this);
 
         etCurrencyFrom = findViewById(R.id.etCurrencyFrom);
@@ -82,7 +82,7 @@ public class CurrencyConvertView extends CardView {
     public void populate(CurrencyInfo currencyInfo) {
         final String date = currencyInfo.getDate();
         if (date != null && !date.isEmpty()) {
-            setDescription(String.format(getContext().getString(R.string.date_update_format), date));
+            setDescription(String.format(getContext().getString(R.string.format_date_update), date));
         } else {
             setDescriptionVisibility(false);
         }

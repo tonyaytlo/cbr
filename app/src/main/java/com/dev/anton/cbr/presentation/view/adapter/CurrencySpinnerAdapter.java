@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.dev.anton.cbr.R.string;
 import com.dev.anton.cbr.domain.model.Currency;
 
 import java.util.List;
@@ -54,8 +55,10 @@ public class CurrencySpinnerAdapter extends ArrayAdapter<Currency> {
                                 ViewGroup parent) {
         TextView tvLabel = (TextView) super.getDropDownView(position, convertView, parent);
         Currency item = currency.get(position);
-        SpannableStringBuilder str = new SpannableStringBuilder(String.format("%s - %s", item.getCharCode(), item.getName()));
-        str.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0, item.getCharCode().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        SpannableStringBuilder str = new SpannableStringBuilder(String.format(
+                context.getString(string.format_item_currency), item.getCharCode(), item.getName()));
+        str.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 0,
+                item.getCharCode().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvLabel.setText(str);
         return tvLabel;
     }

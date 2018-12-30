@@ -7,7 +7,6 @@ import java.util.Objects;
 public class BaseResponse<T> {
 
     public final T result;
-
     public final BaseError error;
 
     private BaseResponse(@NonNull BaseError error) {

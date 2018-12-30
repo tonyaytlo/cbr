@@ -4,6 +4,7 @@ import com.dev.anton.cbr.domain.executor.BaseTask;
 import com.dev.anton.cbr.domain.executor.Task;
 import com.dev.anton.cbr.domain.interactors.CurrencyUseCase;
 import com.dev.anton.cbr.domain.model.CurrencyInfo;
+import com.dev.anton.cbr.domain.model.core.CompositeTask;
 import com.dev.anton.cbr.presentation.contract.CurrencyContract;
 import com.dev.anton.cbr.presentation.exception.ErrorMsgFactory;
 
@@ -12,7 +13,7 @@ public class CurrencyPresenter implements CurrencyContract.CurrencyPresenter {
     private final CurrencyUseCase currencyUseCase;
     private CurrencyContract.View view;
 
-    private Task task;
+    private CompositeTask tasks;
 
     public CurrencyPresenter(CurrencyUseCase currencyUseCase) {
         this.currencyUseCase = currencyUseCase;
@@ -26,7 +27,7 @@ public class CurrencyPresenter implements CurrencyContract.CurrencyPresenter {
 
     private void loadData() {
         view.showLoading();
-        task = currencyUseCase.fetchCurs()
+        Task task = currencyUseCase.fetchCurs()
                 .setOnCompleteListener(new BaseTask.OnCompleteListener<CurrencyInfo>() {
                     @Override
                     public void onSuccess(CurrencyInfo result) {
@@ -42,6 +43,7 @@ public class CurrencyPresenter implements CurrencyContract.CurrencyPresenter {
                     }
                 });
         task.executeAsync();
+        tasks.addTask(task);
     }
 
     @Override
@@ -52,8 +54,6 @@ public class CurrencyPresenter implements CurrencyContract.CurrencyPresenter {
 
     @Override
     public void onDetachView() {
-        if (task != null) {
-            task.cancelTask();
-        }
+        tasks.cancelAll();
     }
 }
